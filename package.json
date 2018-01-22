@@ -1,0 +1,53 @@
+{
+  "name": "lets-express",
+  "version": "1.0.0",
+  "main": "app.js",
+  "description": "Lets express",
+  "repository": "git@github.com:cham11ng/lets-express.git",
+  "author": "Sagar Chamling <sgr.raee@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "javascript",
+    "node",
+    "express",
+    "es6",
+    "api"
+  ],
+  "scripts": {
+    "start": "node dist",
+    "lint": "eslint src test; exit 0",
+    "build": "rimraf dist && babel src -D --out-dir dist",
+    "seed": "knex seed:run --knexfile src/config/knexfile.js",
+    "migrate": "knex migrate:latest --knexfile src/config/knexfile.js",
+    "rollback": "knex migrate:rollback --knexfile src/config/knexfile.js",
+    "make:seeder": "knex seed:make --knexfile src/config/knexfile.js",
+    "make:migration": "knex migrate:make --knexfile src/config/knexfile.js",
+    "start:dev": "nodemon --watch .env --watch src --exec babel-node src --source-maps"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "eslint": "^4.12.1",
+    "http-status-codes": "^1.3.0",
+    "nodemon": "^1.12.5",
+    "rimraf": "^2.6.2",
+    "youch": "^2.0.5"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "bookshelf": "^0.12.0",
+    "bookshelf-camelcase": "^2.0.1",
+    "boom": "^7.1.1",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "joi": "^13.0.2",
+    "jsonwebtoken": "^8.1.0",
+    "knex": "^0.14.2",
+    "mysql": "^2.15.0"
+  }
+}
