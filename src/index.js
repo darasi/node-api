@@ -7,8 +7,6 @@ import { errorHandler } from './middlewares/handlers';
 
 const app = express();
 
-const one = 1;
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/api', api);
