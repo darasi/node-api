@@ -55,7 +55,7 @@ export function userValidator(request, response, next) {
  */
 export function userEmailValidator(request, response, next) {
   return userService.getUserByEmail(request.body.email)
-    .then(() => next(Boom.badData('Email already exist')))
+    .then((user) => next(Boom.badData('Email already exist')))
     .catch(error => error.isBoom && error.output.statusCode === 404 ? next() : next(error));
 }
 

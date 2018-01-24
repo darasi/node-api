@@ -8,32 +8,22 @@ import usersController from '../controllers/usersController';
 import postsController from '../controllers/postsController';
 import { validateAccessToken } from '../validators/tokenValidator';
 
-/**
- * Contains all API routes for the application.
- */
 let router = Router();
 
-router.get('/', validateAccessToken, (request, response, next) => {
-  if (!request.query.search) {
-    next();
-  } else {
-    SearchService.search(request.query.search, request.query.page)
-      .then(data => response.status(HTTPStatus.OK).json(data))
-      .catch(error => next(error));
-  }
-});
-
-router.get('/', (request, response) => {
-  response.json({
-    app: config.APP_NAME,
-    apiVersion: config.APP_VERSION
-  });
-});
+// router.get('/', validateAccessToken, (req, res, next) => {
+//   if (!req.query.search) {
+//     next();
+//   } else {
+//     SearchService.search(req.query.search, req.query.page)
+//       .then(data => res.status(HTTPStatus.OK).json(data))
+//       .catch(error => next(error));
+//   }
+// });
 
 router.use('/', authController);
 
 router.use('/tags', /* validateAccessToken,*/ tagsController);
 router.use('/users', /* validateAccessToken,*/ usersController);
-router.use('/posts', /* validateAccessToken,*/ postsController);
+router.use('/posts', validateAccessToken, postsController);
 
 export default router;

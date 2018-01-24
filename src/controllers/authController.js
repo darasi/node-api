@@ -12,10 +12,11 @@ router.post('/email', userEmailValidator, (request, response) => {
 });
 
 router.post('/register', userValidator, userEmailValidator, (request, response, next) => {
-  userService
-    .register(request.body)
-    .then(data => response.status(HttpStatus.CREATED).json({ data }))
-    .catch(error => next(error));
+  console.log(userService.register(request.body));
+  // userService
+  //   .register(request.body)
+  //   .then(data => response.status(HttpStatus.CREATED).json({ data }))
+  //   .catch(error => next(error));
 });
 
 router.post('/login', isNotAuthenticated, loginValidator, (request, response, next) => {
@@ -31,7 +32,6 @@ router.post('/token', findToken, validateRefreshToken, (request, response, next)
     .then(data => response.status(HttpStatus.OK).json(data))
     .catch(error => next(error));
 });
-
 
 router.post('/logout', findToken, validateRefreshToken, (request, response, next) => {
   tokenService

@@ -69,9 +69,10 @@ export function register(user) {
     name: user.name,
     email: user.email,
     password: bcrypt.hashSync(user.password, parseInt(auth.saltRounds))
-  }).save().then((user) => {
-    return createSession(user);
-  });
+  }).save()
+    .then((user) => {
+      return createSession(user);
+    });
 }
 
 /**
@@ -84,6 +85,8 @@ export function login(currentUser) {
   return getUserByEmail(currentUser.email).then(user => {
     if (bcrypt.compareSync(currentUser.password, user.get('password'))) {
       return createSession(user);
+    } else {
+      throw Boom.unauthorized('invalid password');
     }
   });
 }

@@ -5,13 +5,10 @@ import { findTag, tagValidator } from '../validators/tagValidator';
 
 const router = Router();
 
-/**
- * GET /api/tags
- */
-router.get('/', (request, response, next) => {
+router.get('/', (req, res, next) => {
   tagService
-    .getAllTags(request.query.page)
-    .then(data => response.status(HttpStatus.OK).json({ results: data, pagination: data.pagination }))
+    .getAllTags(req.query.page)
+    .then(data => res.status(HttpStatus.OK).json({ results: data, pagination: data.pagination }))
     .catch(error => next(error));
 });
 
