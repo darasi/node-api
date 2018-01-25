@@ -18,13 +18,13 @@ export function validateAccessToken(request, response, next) {
         request.userInfo = decodedToken;
         next();
       } else if (error.name === 'TokenExpiredError') {
-        next(Boom.unauthorized('Token Expired'));
+        next(Boom.clientTimeout('Token Expired'));
       } else {
         next(Boom.unauthorized('Invalid Token'));
       }
     });
   } else {
-    next(Boom.notAcceptable('Bad Request'));
+    next(Boom.unauthorized('Unauthorized'));
   }
 }
 
@@ -44,13 +44,13 @@ export function validateRefreshToken(request, response, next) {
         request.userInfo = decodedToken;
         next();
       } else if (error.name === 'TokenExpiredError') {
-        next(Boom.notAcceptable('Bad Request'));
+        next(Boom.clientTimeout('Token expired'));
       } else {
-        next(Boom.notAcceptable('Invalid Token'));
+        next(Boom.unauthorized('Invalid Token'));
       }
     });
   } else {
-    next(Boom.notAcceptable('Bad Request'));
+    next(Boom.unauthorized('Bad Request'));
   }
 }
 

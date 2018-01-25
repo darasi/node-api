@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt-nodejs';
+import * as bcrypt from 'bcryptjs';
 import auth from '../../config/auth';
 
 /**

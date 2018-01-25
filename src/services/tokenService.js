@@ -13,7 +13,7 @@ export function getToken(token) {
   return new Token({ refresh: token }).fetch()
     .then(token => {
       if (!token) {
-        throw Boom.notFound('Tag not found');
+        throw Boom.notFound('Token not found');
       }
 
       return token;

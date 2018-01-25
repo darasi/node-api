@@ -1,5 +1,5 @@
 import Boom from 'boom';
-import * as bcrypt from 'bcrypt-nodejs';
+import * as bcrypt from 'bcryptjs';
 import User from '../models/User';
 import auth from '../config/auth';
 import { createSession } from './tokenService';
@@ -72,6 +72,9 @@ export function register(user) {
   }).save()
     .then((user) => {
       return createSession(user);
+    })
+    .catch(error => {
+      return error;
     });
 }
 
