@@ -6,14 +6,17 @@ import * as userService from '../services/userService';
 const SCHEMA = {
   name: Joi.string()
     .label('Name')
+    .trim()
     .max(90)
     .required(),
   email: Joi.string()
     .label('Email')
+    .trim()
     .max(90)
     .required(),
   password: Joi.string()
     .label('Password')
+    .trim()
     .min(6)
     .max(90)
     .required()
@@ -22,11 +25,12 @@ const SCHEMA = {
 const LOGIN_SCHEMA = {
   email: Joi.string()
     .label('Email')
+    .trim()
     .max(90)
     .required(),
   password: Joi.string()
     .label('Password')
-    .min(6)
+    .trim()
     .max(90)
     .required()
 };
@@ -96,11 +100,22 @@ export function findUser(request, response, next) {
  * @param  {function} next
  * @return {Promise}
  */
-export function isNotAuthenticated(request, response, next) {
-  return userService
-    .hasToken(request.body.email)
-    .then((result) => {
-      result.length ? next(Boom.badData('Already authenticated')) : next();
-    })
-    .catch(err => next(err));
+export async function isNotAuthenticated(req, res, next) {
+  try {
+    let token = await userService.hasToken(req.body.email);
+    if(token.length) {
+      return next(Boom.badData('Already authenticated'));
+    } else {
+      return next();
+    }
+
+  } catch(err) {
+    return next(err);
+  }
+  // return userService
+  //   .hasToken(request.body.email)
+  //   .then((result) => {
+  //     result.length ? next(Boom.badData('Already authenticated')) : next();
+  //   })
+  //   .catch(err => next(err));
 }
