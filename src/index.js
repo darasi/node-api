@@ -12,6 +12,9 @@ import path from'path';
 
 const app = express();
 
+if (!fs.existsSync('./logs')) {fs.mkdirSync('./logs');}
+if (!fs.existsSync('./static')) {fs.mkdirSync('./static');}
+
 const accessLogStream = fs.createWriteStream(path.join(__dirname, '../logs/errors.log'), { flags: 'a' });
 
 app.use(morgan('combined', {
@@ -21,7 +24,7 @@ app.use(morgan('combined', {
 app.use(compression());
 app.use(helmet());
 app.use(cors({
-  origin: ['http://localhost:3005','http://localhost:8000'],
+  origin: ['http://localhost:3005','http://localhost:8000','http://localhost:8080'],
   optionsSuccessStatus: 200
 }));
 app.use(bodyParser.urlencoded({ extended: false }));

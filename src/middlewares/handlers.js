@@ -46,9 +46,7 @@ export function convertExceptionToJSONResponse(error) {
     return {
       code: HttpStatus.UNPROCESSABLE_ENTITY,
       message: HttpStatus.getStatusText(HttpStatus.UNPROCESSABLE_ENTITY),
-      details:
-      error.details &&
-      error.details.map(error => {
+      details: error.details && error.details.map(error => {
         return {
           message: error.message,
           param: error.path.join('.')
