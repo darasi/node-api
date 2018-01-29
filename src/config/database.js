@@ -8,8 +8,7 @@ const bookshelf = bookshelfJs(knex);
 bookshelf.plugin([
   'virtuals',
   'pagination',
-  'visibility',
-  'bookshelf-camelcase'
+  'visibility'
 ]);
 
 export default bookshelf;

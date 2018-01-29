@@ -102,7 +102,7 @@ export function deleteToken(token) {
   return new Token().where({ refresh: token }).destroy({ require: true })
     .then(() => {
       return {
-        info: 'Logout Successful'
+        message: 'Logout Successful'
       };
     }).catch(() => {
       throw Boom.unauthorized('Token Expired');

@@ -37,6 +37,13 @@ router.post('/token', findToken, validateRefreshToken, (request, response, next)
     .catch(error => next(error));
 });
 
+router.post('/current_user', findToken, validateRefreshToken, (request, response, next) => {
+  userService
+    .getUser(request.userInfo.data.id)
+    .then(data => response.status(HttpStatus.OK).json(data))
+    .catch(error => next(error));
+});
+
 router.post('/logout', findToken, validateRefreshToken, (request, response, next) => {
   tokenService
     .deleteToken(request.headers.authorization.substring(7))

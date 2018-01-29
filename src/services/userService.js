@@ -13,8 +13,7 @@ import config from '../config/app';
 export function getAllUsers(page = 1) {
   return User.fetchPage({
     page: page,
-    pageSize: config.APP_PAGE_LIMIT,
-    withRelated: ['token']
+    pageSize: config.APP_PAGE_LIMIT
   }).then(results => results);
 }
 
@@ -24,14 +23,19 @@ export function getAllUsers(page = 1) {
  * @param  {Number|String}  id
  * @return {Promise}
  */
-export function getUser(id) {
-  return new User({ id }).fetch({ withRelated: ['posts', 'token'] }).then(user => {
-    if (!user) {
-      throw Boom.notFound('User not found');
-    }
+export async function getUser(id) {
+  try {
+    return await new User({ id }).fetch({ withRelated: ['posts'] });
+  } catch(err) {
+    throw Boom.notFound('User not found');
+  }
+  // return new User({ id }).fetch({ withRelated: ['posts'] }).then(user => {
+  //   if (!user) {
+  //     throw Boom.notFound('User not found');
+  //   }
 
-    return user;
-  });
+  //   return user;
+  // });
 }
 
 /**

@@ -12,6 +12,10 @@ class User extends bookshelf.Model {
     return TABLE_NAME;
   }
 
+  get hidden() {
+    return ['password'];
+  }
+
   get hasTimestamps() {
     return true;
   }
