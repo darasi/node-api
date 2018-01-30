@@ -23,7 +23,7 @@ router.post('/register', userValidator, userEmailValidator, async (request, resp
     .catch(error => next(error));
 });
 
-router.post('/login', loginValidator, isNotAuthenticated, (request, response, next) => {
+router.post('/login', loginValidator, (request, response, next) => {
   userService
     .login(request.body)
     .then(data => response.status(HttpStatus.CREATED).json({ data }))

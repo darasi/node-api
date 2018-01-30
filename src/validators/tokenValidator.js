@@ -66,5 +66,6 @@ export function findToken(request, response, next) {
   return tokenService
     .getToken(request.headers.authorization.substring(7))
     .then(() => next())
-    .catch(() => next(Boom.notAcceptable('Token Expired')));
+    // .catch(() => next(Boom.notAcceptable('Token not found')));
+    .catch(() => next());
 }
