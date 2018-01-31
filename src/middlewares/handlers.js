@@ -59,7 +59,8 @@ export function convertExceptionToJSONResponse(error) {
   if (error.isBoom) {
     return {
       code: error.output.statusCode,
-      message: error.output.payload.message || error.output.payload.error
+      message: error.output.payload.message || error.output.payload.error,
+      details: error.output.payload.attributes && [error.output.payload.attributes] || []
     };
   }
 
