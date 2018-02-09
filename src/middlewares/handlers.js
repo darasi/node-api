@@ -41,6 +41,7 @@ export function errorHandler(err, req, res, next) {
  * @return {Object}
  */
 export function convertExceptionToJSONResponse(error) {
+  if(process.NODE_ENV === 'development') {console.log(error)};
   // Validation errors
   if (error.isJoi) {
     return {

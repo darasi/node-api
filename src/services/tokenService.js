@@ -32,9 +32,16 @@ export function createSession(user) {
     name: user.get('name'),
     email: user.get('email')
   });
-  user.token().save({
-    refresh: jwTokens.refreshToken
-  });
+  if(Object.keys(user.token().attributes).length) {
+    user.token().where({ user_id: user.get('id') }).save({
+      refresh: jwTokens.refreshToken
+    },
+    { patch: true });
+  } else {
+    user.token().save({
+      refresh: jwTokens.refreshToken
+    });
+  }
 
   return jwTokens;
 }
@@ -99,12 +106,15 @@ export function generateRefreshToken(data) {
  * @returns {Promise}
  */
 export function deleteToken(token) {
-  return new Token().where({ refresh: token }).destroy({ require: true })
-    .then(() => {
-      return {
-        message: 'Logout Successful'
-      };
+  return new Token({ refresh: token }).fetch()
+    .then(result => {
+      if (!result) {
+        throw Boom.notFound('Token not found');
+      }
+      result.destroy();
+
+      return { message: 'Logout Successful' };
     }).catch(() => {
-      throw Boom.unauthorized('Token Expired');
+      throw Boom.notFound('Token not found');
     });
 }

@@ -29,13 +29,6 @@ export async function getUser(id) {
   } catch(err) {
     throw Boom.notFound('User not found');
   }
-  // return new User({ id }).fetch({ withRelated: ['posts'] }).then(user => {
-  //   if (!user) {
-  //     throw Boom.notFound('User not found');
-  //   }
-
-  //   return user;
-  // });
 }
 
 /**
