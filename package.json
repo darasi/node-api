@@ -23,7 +23,7 @@
     "rollback": "knex migrate:rollback --knexfile src/config/knexfile.js",
     "make:seeder": "knex seed:make --knexfile src/config/knexfile.js",
     "make:migration": "knex migrate:make --knexfile src/config/knexfile.js",
-    "dev": "nodemon --watch .env --watch src --exec babel-node src --source-maps"
+    "dev": "nodemon --watch src --exec babel-node src --source-maps"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

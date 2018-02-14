@@ -16,7 +16,7 @@ module.exports = {
         ? process.env.TEST_DB_NAME
         : process.env.DB_NAME,
     charset: 'utf8',
-    timezone: 'UTC'
+    timezone: "+04:00"
   },
   migrations: {
     tableName: 'migrations',

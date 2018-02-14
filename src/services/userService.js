@@ -25,7 +25,12 @@ export function getAllUsers(page = 1) {
  */
 export async function getUser(id) {
   try {
-    return await new User({ id }).fetch({ withRelated: ['posts'] });
+    const user = await new User({ id }).fetch({ withRelated: ['posts'] });
+    if (!user) {
+      throw Boom.notFound('User not found');
+    }
+
+    return user;
   } catch(err) {
     throw Boom.notFound('User not found');
   }
