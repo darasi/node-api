@@ -112,6 +112,7 @@ export async function isNotAuthenticated(req, res, next) {
   } catch(err) {
     return next(err);
   }
+
   // return userService
   //   .hasToken(request.body.email)
   //   .then((result) => {
