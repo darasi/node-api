@@ -1,6 +1,8 @@
 import Youch from 'youch';
 import HttpStatus from 'http-status-codes';
 
+import logger from '../utils/logger';
+
 /**
  * Convert exception to HTMLResponse
  *
@@ -41,7 +43,8 @@ export function errorHandler(err, req, res, next) {
  * @return {Object}
  */
 export function convertExceptionToJSONResponse(error) {
-  if(process.NODE_ENV === 'development') {console.log(error);}
+  if(!error.isJoi && !error.isBoom) { logger.error(error);}
+
   // Validation errors
   if (error.isJoi) {
     return {
