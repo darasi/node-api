@@ -10,9 +10,7 @@ import morgan from 'morgan';
 import api from './routes/api';
 import config from './config/app';
 import logger from './utils/logger';
-import { errorHandler } from './middlewares/handlers';
-import nodeErrorHandler from './middlewares/nodeErrorHandler';
-import notFoundHandler from './middlewares/notFoundHandler';
+import { errorHandler, nodeErrorHandler } from './middlewares/handlers';
 
 const app = express();
 
@@ -35,9 +33,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api', api);
 app.use('/static', express.static(path.join(__dirname, '../static')));
-
 app.use(errorHandler);
-app.use(notFoundHandler);
 
 app
   .listen(config.APP_PORT, config.APP_HOST, () => {

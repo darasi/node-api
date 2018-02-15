@@ -11,7 +11,7 @@ import logger from '../utils/logger';
  * @param response
  * @param next
  */
-export function convertExceptionToHTMLResponse(error, request, response, next) {
+export const convertExceptionToHTMLResponse = (error, request, response, next) => {
   const youch = new Youch(error, request);
 
   youch
@@ -21,7 +21,7 @@ export function convertExceptionToHTMLResponse(error, request, response, next) {
       response.write(html);
       response.end();
     });
-}
+};
 
 /**
  * Generic error response middleware for validation and internal server errors.
@@ -31,10 +31,10 @@ export function convertExceptionToHTMLResponse(error, request, response, next) {
  * @param  {Object}   res
  * @param  {Function} next
  */
-export function errorHandler(err, req, res, next) {
+export const errorHandler = (err, req, res, next) => {
   let error = convertExceptionToJSONResponse(err);
   res.status(error.code).json({ error });
-}
+};
 
 /**
  * Build error response for validation errors.
@@ -42,7 +42,7 @@ export function errorHandler(err, req, res, next) {
  * @param  {Error} error
  * @return {Object}
  */
-export function convertExceptionToJSONResponse(error) {
+export const convertExceptionToJSONResponse = (error) => {
   if(!error.isJoi && !error.isBoom) { logger.error(error);}
 
   // Validation errors
@@ -73,4 +73,20 @@ export function convertExceptionToJSONResponse(error) {
     code: HttpStatus.INTERNAL_SERVER_ERROR,
     message: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)
   };
-}
+};
+
+export const nodeErrorHandler = (err) => {
+  switch (err.code) {
+    case 'EACCES':
+      logger.error('Port requires elevated privileges.');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      logger.error('Port is already in use.');
+      process.exit(1);
+      break;
+    default:
+      logger.error(err);
+      throw err;
+  }
+};
