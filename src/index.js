@@ -21,7 +21,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, '../logs/error
 
 app.use(compression());
 app.use(cors({
-  origin: ['http://localhost:3005','http://localhost:8000','http://localhost:8080'],
+  origin: ['https://melnf.com','http://localhost:3005','http://localhost:8000','http://localhost:8080'],
   optionsSuccessStatus: 200
 }));
 app.use(helmet());
