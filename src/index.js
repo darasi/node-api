@@ -5,7 +5,6 @@ import cors from 'cors';
 import compression from 'compression';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
-import morgan from 'morgan';
 
 import api from './routes/api';
 import config from './config/app';
@@ -17,18 +16,12 @@ const app = express();
 if (!fs.existsSync('./logs')) {fs.mkdirSync('./logs');}
 if (!fs.existsSync('./static')) {fs.mkdirSync('./static');}
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, '../logs/errors.log'), { flags: 'a' });
-
 app.use(compression());
 app.use(cors({
   origin: ['https://melnf.com','http://localhost:3005','http://localhost:8000','http://localhost:8080'],
   optionsSuccessStatus: 200
 }));
 app.use(helmet());
-app.use(morgan('combined', {
-  stream: accessLogStream,
-  skip: (req, res) => res.statusCode < 499
-}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api', api);

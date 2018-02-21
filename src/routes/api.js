@@ -3,17 +3,21 @@ import config from '../config/app';
 import * as HTTPStatus from 'http-status-codes';
 import * as SearchService from '../services/searchService';
 import { validateAccessToken } from '../validators/tokenValidator';
-import {
-  authController,
-  usersController,
-  postsController,
-  checkoutController,
-  tagsController
-} from '../controllers';
+import authController from '../controllers/authController';
+import usersController from '../controllers/usersController';
+import postsController from '../controllers/postsController';
+import checkoutController from '../controllers/checkoutController';
+import tagsController from '../controllers/tagsController';
 
 const router = Router();
 
-// router.get('/', validateAccessToken, (req, res, next) => {
+router.use('/auth', authController);
+router.use('/users', /* validateAccessToken,*/ usersController);
+router.use('/posts', validateAccessToken, postsController);
+router.use('/checkout', checkoutController);
+router.use('/tags', /* validateAccessToken,*/ tagsController);
+
+// router.get('/search', validateAccessToken, (req, res, next) => {
 //   if (!req.query.search) {
 //     next();
 //   } else {
@@ -22,11 +26,5 @@ const router = Router();
 //       .catch(error => next(error));
 //   }
 // });
-
-router.use('/', authController);
-router.use('/users', /* validateAccessToken,*/ usersController);
-router.use('/posts', validateAccessToken, postsController);
-router.use('/checkout', checkoutController);
-router.use('/tags', /* validateAccessToken,*/ tagsController);
 
 export default router;
