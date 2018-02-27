@@ -32,16 +32,16 @@ export function createSession(user) {
     name: user.get('name'),
     email: user.get('email')
   });
-  if(Object.keys(user.token().attributes).length) {
-    user.token().where({ user_id: user.get('id') }).save({
-      refresh: jwTokens.refreshToken
-    },
-    { patch: true });
-  } else {
-    user.token().save({
-      refresh: jwTokens.refreshToken
-    });
-  }
+  // if(Object.keys(user.token().attributes).length) {
+  //   user.token().where({ user_id: user.get('id') }).save({
+  //     refresh: jwTokens.refreshToken
+  //   },
+  //   { patch: true });
+  // } else {
+  //   user.token().save({
+  //     refresh: jwTokens.refreshToken
+  //   });
+  // }
 
   return jwTokens;
 }

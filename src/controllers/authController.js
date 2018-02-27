@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import * as HttpStatus from 'http-status-codes';
+import passport from 'passport';
+
 import * as userService from '../services/userService';
 import * as tokenService from '../services/tokenService';
 import { findToken, validateRefreshToken } from '../validators/tokenValidator';
@@ -9,6 +11,7 @@ import {
   userValidator,
   userEmailValidator
 } from '../validators/userValidator';
+import logger from '../utils/logger';
 
 const router = Router();
 
@@ -49,6 +52,10 @@ router.post('/logout', validateRefreshToken, (request, response, next) => {
     .deleteToken(request.headers.authorization.substring(7))
     .then(data => response.status(HttpStatus.OK).json(data))
     .catch(error => next(error));
+});
+
+router.post('/facebook/token', userService.fbTokenAuth(), (request, response, next) => {
+  response.status(HttpStatus.OK).json(tokenService.createSession(request.user));
 });
 
 export default router;

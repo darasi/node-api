@@ -1,27 +1,6 @@
-import Youch from 'youch';
 import HttpStatus from 'http-status-codes';
 
 import logger from '../utils/logger';
-
-/**
- * Convert exception to HTMLResponse
- *
- * @param error
- * @param request
- * @param response
- * @param next
- */
-export const convertExceptionToHTMLResponse = (error, request, response, next) => {
-  const youch = new Youch(error, request);
-
-  youch
-    .toHTML()
-    .then((html) => {
-      response.writeHead(200, { 'content-type': 'text/html' });
-      response.write(html);
-      response.end();
-    });
-};
 
 /**
  * Generic error response middleware for validation and internal server errors.
