@@ -1,9 +1,10 @@
 import fs from 'fs';
 import path from'path';
 import express from 'express';
-import cors from 'cors';
 import compression from 'compression';
+import cors from 'cors';
 import helmet from 'helmet';
+import passport from 'passport';
 import bodyParser from 'body-parser';
 
 import api from './routes/api';
@@ -22,6 +23,7 @@ app.use(cors({
   optionsSuccessStatus: 200
 }));
 app.use(helmet());
+app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api', api);
@@ -30,6 +32,6 @@ app.use(errorHandler);
 
 app
   .listen(config.APP_PORT, config.APP_HOST, () => {
-    logger.info(`Server started at http://${config.APP_HOST}:${config.APP_PORT}`);
+    logger.info(`NODE_ENV: ${config.APP_ENV} Server started at http://${config.APP_HOST}:${config.APP_PORT}`);
   })
   .on('error', nodeErrorHandler);

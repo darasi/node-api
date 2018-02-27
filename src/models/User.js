@@ -13,7 +13,7 @@ class User extends bookshelf.Model {
   }
 
   get hidden() {
-    return ['password','updated_at'];
+    return ['password','updated_at','provider','fb_id','google_id'];
   }
 
   get hasTimestamps() {
